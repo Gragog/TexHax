@@ -97,9 +97,7 @@
     <None Include="res\hax\unicodedata.pyd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="res\szs\test.szs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="res\szs\test.szs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Gold.ico" />

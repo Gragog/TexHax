@@ -40,7 +40,7 @@ namespace TexHax
                 "\n5 - Pack a .bfres into .szs" +
                 "\n" +
                 "\ns - Settings" +
-                "\nf - Copy a .bfres to 'Finished\', in the case a .bfres is what you need" +
+                "\nf - Copy a .bfres to 'Finished\', in case a .bfres is what you need" +
                 "\nh - Help" +
                 "\nc - Clear stuff belonging to a .bfres" +
                 "\nw - Wipe everything except 'szs\'" +
