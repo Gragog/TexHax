@@ -104,23 +104,25 @@ namespace TexHax
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("\nSuccessfully decompressed Yaz0 compressed file!\n");
 
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(@"Creating 'bfres\...");
-                    if (!Directory.Exists("bfres\\")) Directory.CreateDirectory("bfres\\");
-                    Console.WriteLine(" done\n");
+                    if (!Directory.Exists("bfres\\"))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+
+                        Console.WriteLine(@"Creating 'bfres\'");
+                        Directory.CreateDirectory("bfres\\");
+                        Console.WriteLine(" done\n");
+                    }
 
                     File.Move(@"szs\" + szsFileName + ".fres", @"bfres\" + newBfresFile + ".bfres");
                 }
                 else
                 {
-                    Console.WriteLine("The file does not appear to be a valid Yaz0 compressed file! Press any key to close the window.");
-                    Console.ReadKey();
+                    Console.WriteLine("The file does not appear to be a valid Yaz0 compressed file!\n");
                 }
             }
             else
             {
-                Console.WriteLine("The file specified does not exist. Press any key to close the window.");
-                Console.ReadKey();
+                Console.WriteLine("The file specified does not exist.\n");
             }
         }
 
@@ -128,7 +130,7 @@ namespace TexHax
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.WriteLine("\nDecode which .szs?");
+            Console.WriteLine("Decode which .szs?");
 
             Regex regexItem = new Regex("^[a-zA-Z0-9_-]{1,}$");
 

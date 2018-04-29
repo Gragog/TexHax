@@ -39,7 +39,7 @@ namespace TexHax
                         minMip + " " +
                         texPos + " " +
                         wait;
-                    Console.WriteLine("Debug (cParams):   |" + cParams + "|  ");
+                    // Console.WriteLine("Debug (cParams):   |" + cParams + "|  ");
                     break;
             }
 
@@ -158,7 +158,7 @@ namespace TexHax
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.WriteLine("\nWhich .bfres to edit?");
+            Console.WriteLine("Which .bfres to edit?");
 
             Regex regexItem = new Regex("^[a-zA-Z0-9_-]{1,}$");
 

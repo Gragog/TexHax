@@ -22,14 +22,14 @@ namespace TexHax
 
             Prepare();
 
-            if (!File.Exists(@"bfres_backup\" + bfresFile + ".bfres"))
+            /* if (!File.Exists(@"bfres_backup\" + bfresFile + ".bfres"))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
 
                 Console.WriteLine("\n\n  Backing up " + bfresFile + ".bfres");
                 File.Copy(@"bfres\" + bfresFile + ".bfres", @"bfres_backup\" + bfresFile + ".bfres");
                 Console.WriteLine("   done");
-            }
+            } */
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine(
@@ -52,7 +52,7 @@ namespace TexHax
             Sleep(250);
             Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.WriteLine("\n" + @"Renaming 'Convert\" + bfresFile + @".bfres'" + " to " + @"Convert\" + bfresFile + @"\");
+            Console.WriteLine("\n" + @"Renaming 'Extracted\" + bfresFile + @".bfres\'" + " to " + @"Extracted\" + bfresFile + @"\");
             Directory.Move(@"Extracted\" + bfresFile + @".bfres", @"Extracted\" + bfresFile + @"\");
             Console.WriteLine(" done\n");
         }
@@ -61,7 +61,7 @@ namespace TexHax
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.WriteLine("\nExtract from which .bfres?");
+            Console.WriteLine("Extract from which .bfres?");
 
             Regex regexItem = new Regex("^[a-zA-Z0-9_-]{1,}$");
 
@@ -113,12 +113,12 @@ namespace TexHax
                 Console.WriteLine("     done");
             }
 
-            if (!Directory.Exists(@"bfres_backup\"))
+            /* if (!Directory.Exists(@"bfres_backup\"))
             {
                 Console.WriteLine("\n" + @"    creating 'bfres_backup\'...");
                 Directory.CreateDirectory("bfres_backup");
                 Console.WriteLine("     done");
-            }
+            } */
             Console.WriteLine("\n  All folders are there");
         }
 

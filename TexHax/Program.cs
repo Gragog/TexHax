@@ -29,19 +29,23 @@ namespace TexHax
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
+            Console.Title = "TexHax - Texture extractor, converter and importer for .szs and .bfres files";
+
             Console.WriteLine(
                 "Main Menu - Select Mode:" +
                 "\n1 - Decode .szs" +
                 "\n2 - Extract from *.bfres" +
                 "\n3 - Convert extracted .gtx to .dds" +
                 "\n4 - Import .dds into a .bfres or do stuff related to this" +
-                "\n5 - Pack a finished .bfres into .szs" +
+                "\n5 - Pack a .bfres into .szs" +
                 "\n" +
                 "\ns - Settings" +
-                "\nf - Finish, copy the .bfres to 'Finished\' for having finished at one place" +
+                "\nf - Copy a .bfres to 'Finished\', in the case a .bfres is what you need" +
                 "\nh - Help" +
                 "\nc - Clear stuff belonging to a .bfres" +
-                "\nw - Wipe everything except 'szs\', 'bfres_backup\' and 'Finished\'" +
+                "\nw - Wipe everything except 'szs\'" +
+                        // ",'bfres_backup\'" +
+                        " and 'Finished\'" +
                 "\n" +
                 "\ne - exit"
             );
@@ -69,6 +73,7 @@ namespace TexHax
             {
                 case "1":
                     Decoder decoder = new Decoder();
+                    Console.Clear();
                     decoder.Decode();
                     break;
                 case "2":

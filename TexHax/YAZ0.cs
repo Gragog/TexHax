@@ -13,7 +13,7 @@ namespace Compressor
         //Compression could be optimized by using look-ahead.
         public unsafe byte[] Compress(string bfresFile)
         {
-            byte[] Data = File.ReadAllBytes(@"Finished\" + bfresFile + ".bfres");
+            byte[] Data = File.ReadAllBytes(@"bfres\" + bfresFile + ".bfres");
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -121,7 +121,8 @@ namespace Compressor
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             sw.Stop();
-            Console.WriteLine("\n\nCompression done in " + sw.Elapsed.Minutes + ":" + sw.Elapsed.Seconds + "." + sw.Elapsed.Milliseconds + " seconds\n");
+            Console.WriteLine("\n\nCompressed in " + sw.Elapsed.Minutes + ":" + sw.Elapsed.Seconds + "." + sw.Elapsed.Milliseconds + " seconds");
+            Console.WriteLine("File is " + GetFileSize(realresult.Length, 2) + " big\n");
 
             return realresult;
         }
@@ -174,6 +175,24 @@ namespace Compressor
             Console.ForegroundColor = ConsoleColor.Yellow;
 
             Console.Write("}");
+        }
+
+        string GetFileSize(Int64 value, int decimalPlaces = 1)
+        {
+            string[] SizeSuffixes =
+                  { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+
+            if (value < 0) return "-" + GetFileSize(-value); 
+
+            int i = 0;
+            decimal dValue = (decimal)value;
+            while (Math.Round(dValue, decimalPlaces) >= 1000)
+            {
+                dValue /= 1024;
+                i++;
+            }
+
+            return string.Format("{0:n" + decimalPlaces + "} {1}", dValue, SizeSuffixes[i]);
         }
     }
 }

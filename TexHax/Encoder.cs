@@ -25,12 +25,12 @@ namespace TexHax
 
             szsTarget = bfresFile;
 
-            if (!Directory.Exists(@"Finished\"))
+            /* if (!Directory.Exists(@"Finished\"))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Finished Folder does not exit.\nType 'f' from the main menu to create a finished .bfres\n");
                 return;
-            }
+            } */
 
             // Creating 'Finished\'
             if (!Directory.Exists(@"Finished\szs\"))
@@ -50,13 +50,13 @@ namespace TexHax
 
                 if (encoder == "default")
                 {
-                    Console.WriteLine("\nEncoding 'Finished\\" + bfresFile + @".bfres' to 'Finished\" + szsTarget + ".bfres.yaz0'. This will take a while\n");
+                    Console.WriteLine("\nEncoding 'bfres\\" + bfresFile + @".bfres' to 'bfres\" + szsTarget + ".bfres.yaz0'. This will take a while\n");
 
                     RunDefaultEncoder(bfresFile);
 
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nRenaming '" + szsTarget + ".bfres.yaz0' to '" + szsTarget + ".szs'...");
-                    File.Move(@"Finished\" + bfresFile + ".bfres.yaz0", @"Finished\szs\" + szsTarget + ".szs");
+                    File.Move(@"bfres\" + bfresFile + ".bfres.yaz0", @"Finished\szs\" + szsTarget + ".szs");
                     Console.WriteLine(" done\n");
                     return;
                 }
@@ -71,7 +71,7 @@ namespace TexHax
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.WriteLine("\nEncode which .bfres in 'Finished\'?");
+            Console.WriteLine("Encode which .bfres?");
 
             Regex regexItem = new Regex("^[a-zA-Z0-9_-]{1,}$");
 
@@ -93,13 +93,13 @@ namespace TexHax
                     continue;
                 }
 
-                if (isRegexValid && File.Exists(@"Finished\" + input + ".bfres"))
+                if (isRegexValid && File.Exists(@"bfres\" + input + ".bfres"))
                 {
                     validInput = true;
                     bfresFile = input;
                     szsTarget = input;
                 }
-                else Console.WriteLine(@"Finished\" + input + ".bfres does not exist!");
+                else Console.WriteLine(@"bfres\" + input + ".bfres does not exist!");
             }
         }
 
@@ -190,9 +190,9 @@ namespace TexHax
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(
                 "How do you want to compress?" +
-                "\n1 - default" +
-                "\n2 - fast (might increase file size)" +
-                "\n3 - compress big file (WILL take a long time)" +
+                //"\n1 - default" +
+                "\n1 - fast (might increase file size)" +
+                "\n2 - compress big file (WILL take a long time)" +
                 "\n"
                 );
 
@@ -218,14 +218,14 @@ namespace TexHax
 
             switch (input)
             {
-                case "1":
+                case "3":
                     encoder = "default";
                     break;
-                case "2":
+                case "1":
                     encoder = "default";
                     useFast = "Fast";
                     break;
-                case "3":
+                case "2":
                     encoder = "inCode";
                     break;
             }
@@ -236,8 +236,9 @@ namespace TexHax
             Console.ForegroundColor = ConsoleColor.Cyan;
             Process proc = new Process();
             proc.StartInfo.FileName = @"res\yaz0enc" + useFast + ".exe";
-            proc.StartInfo.Arguments = @"Finished\" + bfresFile + ".bfres";
+            proc.StartInfo.Arguments = @"bfres\" + bfresFile + ".bfres";
             proc.StartInfo.RedirectStandardInput = true;
+            proc.StartInfo.RedirectStandardOutput = true;
             proc.StartInfo.UseShellExecute = false;
             proc.Start();
 

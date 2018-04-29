@@ -32,7 +32,7 @@ namespace TexHax
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.WriteLine("\nWhich folder inside of 'Extracted' to convert?");
+            Console.WriteLine("Which folder inside of 'Extracted' to convert?");
 
             Regex regexItem = new Regex("^[a-zA-Z0-9_-]{1,}$");
 
