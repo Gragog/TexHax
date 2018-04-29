@@ -83,7 +83,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -119,7 +119,7 @@ namespace TexHax
             while (!conflictValidInput)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                conflictInput = Console.ReadLine();
+                conflictInput = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 switch (conflictInput)
@@ -168,7 +168,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) { validInput = true; isRegexValid = true; }
@@ -192,7 +192,7 @@ namespace TexHax
                 "How do you want to compress?" +
                 //"\n1 - default" +
                 "\n1 - fast (might increase file size)" +
-                "\n2 - compress big file (WILL take a long time)" +
+                "\n2 - compress big file (will take some time)" +
                 "\n"
                 );
 

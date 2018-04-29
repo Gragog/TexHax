@@ -73,7 +73,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;

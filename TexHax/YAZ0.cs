@@ -122,7 +122,7 @@ namespace Compressor
             Console.ForegroundColor = ConsoleColor.Yellow;
             sw.Stop();
             Console.WriteLine("\n\nCompressed in " + sw.Elapsed.Minutes + ":" + sw.Elapsed.Seconds + "." + sw.Elapsed.Milliseconds + " seconds");
-            Console.WriteLine("File is " + GetFileSize(realresult.Length, 2) + " big\n");
+            Console.WriteLine("File is " + TexHax.Helper.NumberToFilesize(realresult.Length, 2) + " big\n");
 
             return realresult;
         }
@@ -177,22 +177,6 @@ namespace Compressor
             Console.Write("}");
         }
 
-        string GetFileSize(Int64 value, int decimalPlaces = 1)
-        {
-            string[] SizeSuffixes =
-                  { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
-
-            if (value < 0) return "-" + GetFileSize(-value); 
-
-            int i = 0;
-            decimal dValue = (decimal)value;
-            while (Math.Round(dValue, decimalPlaces) >= 1000)
-            {
-                dValue /= 1024;
-                i++;
-            }
-
-            return string.Format("{0:n" + decimalPlaces + "} {1}", dValue, SizeSuffixes[i]);
-        }
+        
     }
 }

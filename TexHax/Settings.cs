@@ -18,19 +18,19 @@ namespace TexHax
             Console.ForegroundColor = ConsoleColor.DarkYellow;
 
             Console.WriteLine(
-                "\nChange what?" +
+                "Change what?" +
                 "\n1 - Waiting time for importing" +
                 "\n2 - maxBack value for compressing huge files"
                 );
 
             string input = "";
 
-            Regex regexItem = new Regex(@"^(([1-2]{1})|([ehcfs]{1}))$");
+            Regex regexItem = new Regex(@"^(([1-2]{1})|([q]{1}))$");
             bool validInput = false;
             while (!validInput)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
 
                 if (regexItem.IsMatch(input)) validInput = true;
                 else
@@ -40,6 +40,7 @@ namespace TexHax
                 }
             }
 
+            Console.Clear();
             switch (input)
             {
                 case "1":
@@ -48,6 +49,9 @@ namespace TexHax
                 case "2":
                     SetYaz0_maxBack();
                     break;
+
+                case "q":
+                    return;
             }
         }
 
@@ -64,7 +68,9 @@ namespace TexHax
             while (!isRegexValid)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
+
+                if (input == "q")
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -89,7 +95,7 @@ namespace TexHax
             while (!isRegexValid)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 if (regexItem.IsMatch(input)) isRegexValid = true;

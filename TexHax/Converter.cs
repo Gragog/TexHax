@@ -44,7 +44,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -132,12 +132,12 @@ namespace TexHax
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine(
-                "\n\nRunning 'quickbms.exe'...\n\n" +
+                "\n\nRunning 'texconv2.exe'...\n\n" +
                 "======================================================================\n" +
                 "======================================================================"
                 );
 
-            Sleep(500);
+            // Sleep(500);
 
             Console.ForegroundColor = ConsoleColor.Cyan;
             ConvertToLossy();

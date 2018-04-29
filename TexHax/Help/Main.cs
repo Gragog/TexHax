@@ -11,39 +11,30 @@ namespace TexHax.Help
     {
         Basics basics;
 
-        public void help()
+        public void Help()
         {
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-
-            RunMode(AskForMode());
-
-            //paintNET();
+            while (true)
+            {
+                if (!RunMode(AskForMode())) break;
+            }
 
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Green;
-        }
-
-        private void paintNET()
-        {
-            Console.WriteLine(
-                @"Edit the .dds using Paint.NET
-save with these parameters:
- - DTX5 (Interpolated Alpha)
- - Iterative Adjustmend (slow/HQ)
- - Perceptive
- - Generate MipMaps
-"
-                );
         }
 
         private string AskForMode()
         {
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+
             Console.WriteLine(
                 "You need help for what?" +
                 "\n1 - Where to start?" +
+                "\n2 - Saving edited files" +
                 "\n" +
-                "\nq - quit"
+                "\nq - quit" +
+                "\n"
                 );
+
+            Console.SetWindowPosition(0, 0);
 
             string input = "";
 
@@ -52,7 +43,7 @@ save with these parameters:
             while (!validInput)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
 
                 if (regexItem.IsMatch(input)) validInput = true;
                 else
@@ -65,17 +56,26 @@ save with these parameters:
             return input;
         }
 
-        private void RunMode(string mode)
+        private bool RunMode(string mode)
         {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Clear();
+
             switch (mode)
             {
                 case "1":
-                    GetBasics().Test();
-                    break;
+                    GetBasics().Help();
+                    return true;
+                case "2":
+                    //PaintNET pdn = new PaintNET();
+                    (new PaintNET()).Help();
+                    return true;
 
                 case "q":
-                    return;
+                    return false;
             }
+
+            return true;
         }
 
         private Basics GetBasics()

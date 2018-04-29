@@ -34,7 +34,7 @@ namespace TexHax
 
                     Console.WriteLine(@"deleting 'bfres\'");
                     Directory.Delete(@"bfres\", true);
-                    Console.WriteLine(" done (deleted " + sizeBfres + " bytes)\n");
+                    Console.WriteLine(" done (deleted " + Helper.NumberToFilesize(sizeBfres) + ")\n");
                     counter++;
                 }
             }
@@ -48,7 +48,7 @@ namespace TexHax
 
                 Console.WriteLine(@"deleting 'Extracted\" + bfresStuff + @"\'");
                 Directory.Delete(@"Extracted\" + bfresStuff, true);
-                Console.WriteLine(" done (deleted " + sizeExtracted + " bytes)\n");
+                Console.WriteLine(" done (deleted " + Helper.NumberToFilesize(sizeExtracted) + ")\n");
                 counter++;
             }
 
@@ -61,7 +61,7 @@ namespace TexHax
 
                 Console.WriteLine(@"deleting 'Converted\dds\" + bfresStuff + @"\'");
                 Directory.Delete(@"Converted\dds\" + bfresStuff, true);
-                Console.WriteLine(" done (deleted " + sizeConvertedDds + " bytes)\n");
+                Console.WriteLine(" done (deleted " + Helper.NumberToFilesize(sizeConvertedDds) + "\n");
                 counter++;
             }
 
@@ -74,18 +74,18 @@ namespace TexHax
 
                 Console.WriteLine(@"deleting 'Converted\dds_lossy\" + bfresStuff + @"\'");
                 Directory.Delete(@"Converted\dds_lossy\" + bfresStuff, true);
-                Console.WriteLine(" done (deleted " + sizeConvertedDdsLossy + " bytes)\n");
+                Console.WriteLine(" done (deleted " + Helper.NumberToFilesize(sizeConvertedDdsLossy) + "\n");
                 counter++;
             }
 
-            Console.WriteLine("\nDeleted " + counter + " folders\nTotal size of " + (sizeBfres + sizeExtracted + sizeConvertedDds + sizeConvertedDdsLossy).ToString() + " bytes\n");
+            Console.WriteLine("\nDeleted " + counter + " folders\nTotal size of " + Helper.NumberToFilesize(sizeBfres + sizeExtracted + sizeConvertedDds + sizeConvertedDdsLossy) + " bytes\n");
         }
 
         private void GetBfresToClearStuff()
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
-            Console.WriteLine("\nClear stuff from which .bfres?");
+            Console.WriteLine("Clear stuff from which .bfres?");
 
             Regex regexItem = new Regex("^[a-zA-Z0-9_-]{1,}$");
 
@@ -97,7 +97,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;

@@ -34,7 +34,7 @@ namespace TexHax
             Console.WriteLine(
                 "Main Menu - Select Mode:" +
                 "\n1 - Decode .szs" +
-                "\n2 - Extract from *.bfres" +
+                "\n2 - Extract from .bfres" +
                 "\n3 - Convert extracted .gtx to .dds" +
                 "\n4 - Import .dds into a .bfres or do stuff related to this" +
                 "\n5 - Pack a .bfres into .szs" +
@@ -57,7 +57,7 @@ namespace TexHax
             while (!validInput)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
 
                 if (regexItem.IsMatch(input)) validInput = true;
                 else
@@ -115,7 +115,7 @@ namespace TexHax
                 case "h":
                     Help.Main help = new Help.Main();
                     Console.Clear();
-                    help.help();
+                    help.Help();
                     break;
                 case "w":
                     Clearer wiper = new Clearer();

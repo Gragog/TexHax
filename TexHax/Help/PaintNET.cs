@@ -8,20 +8,16 @@ namespace TexHax.Help
 {
     class PaintNET
     {
-        public void Menu()
-        {
-            DdsFiles();
-        }
-
-        private void DdsFiles()
+        public void Help()
         {
             Console.WriteLine(
-                "Edit the .dds file and save with:" +
-                "\nGTX5 (interpolated Alpha)" +
-                "\niterative adjustment (slow / HQ)" +
-                "\nperceptive" +
-                "\ngenerate MipMaps"
-            );
+                @"Edit the .dds using Paint.NET
+save with these parameters:
+ - DTX5 (Interpolated Alpha)
+ - Iterative Adjustmend (slow/HQ)
+ - Perceptive
+ - Generate MipMaps
+");
         }
     }
 }

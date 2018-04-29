@@ -58,7 +58,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -93,7 +93,7 @@ namespace TexHax
             while (!conflictValidInput)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                conflictInput = Console.ReadLine();
+                conflictInput = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 switch (conflictInput)
@@ -142,7 +142,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) { validInput = true; isRegexValid = true; }

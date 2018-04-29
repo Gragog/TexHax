@@ -16,7 +16,7 @@ namespace TexHax
         string ddsFile = "";
         string minMip = "";
         string texPos = "";
-        int wait = Settings.import_waitForSec;
+         int wait = Settings.import_waitForSec;
         string cParams = ""; // ddsWithExtenison + @" bfres\" + target + ".bfres " + Convert.ToInt32(minMipInt) + " " + Convert.ToInt32(texPosInt);
 
         public void Import()
@@ -65,7 +65,7 @@ namespace TexHax
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) return input;
@@ -102,7 +102,7 @@ namespace TexHax
                 "======================================================================\n"
                 );
 
-            Thread.Sleep(500);
+            // Thread.Sleep(500);
 
             Console.ForegroundColor = ConsoleColor.Cyan;
 
@@ -142,7 +142,7 @@ namespace TexHax
                 "======================================================================\n"
                 );
 
-            Thread.Sleep(250);
+            // Thread.Sleep(250);
 
             Console.ForegroundColor = ConsoleColor.Green;
         }
@@ -170,7 +170,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -205,7 +205,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -240,7 +240,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -270,7 +270,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine();
+                input = Console.ReadLine().ToLower();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
