@@ -161,8 +161,8 @@ namespace TexHax
             proc.WaitForExit();
 
             int i = 0;
-            List<string> texturePosition = new List<string>();
-            List<string> textureName = new List<string>();
+            List<string> texturePositions = new List<string>();
+            List<string> textureNames = new List<string>();
 
             Regex isNumber = new Regex(@"^\d+");
             foreach (string line in output)
@@ -170,6 +170,9 @@ namespace TexHax
                 if (isNumber.IsMatch(line))
                 {
                     i++;
+                    int whitespaceIndex = line.IndexOf(' ');
+                    textureNames.Add(line.Substring(whitespaceIndex + 1));
+                    texturePositions.Add(line.Substring(0, whitespaceIndex));
                 }
             }
 
