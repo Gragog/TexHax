@@ -41,6 +41,10 @@ namespace TexHax
                         wait;
                     // Console.WriteLine("Debug (cParams):   |" + cParams + "|  ");
                     break;
+                case "3":
+                    ImportAll();
+                    CleanUp();
+                    return;
             }
 
             //RunProgramPython();
@@ -56,16 +60,17 @@ namespace TexHax
             Console.WriteLine(
                 "\nWhat to do?" +
                 "\n1 - List texture positions" +
-                "\n2 - Import .dds into .bfres"
+                "\n2 - Import .dds into .bfres" +
+                "\n3 - Import all possible .dds into .bfres"
                 );
-            Regex regexItem = new Regex(@"^([1-2]{1})$");
+            Regex regexItem = new Regex(@"^([1-3]{1})$");
 
             string input = "";
 
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine().ToLower();
+                input = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) return input;
@@ -102,13 +107,9 @@ namespace TexHax
                 "======================================================================\n"
                 );
 
-            // Thread.Sleep(500);
-
             Console.ForegroundColor = ConsoleColor.Cyan;
 
-            //string cParams = GetPath() + @"\res\hax.py";
             Process proc = new Process();
-            //proc.StartInfo.FileName = @"C:\Python27\python.exe";
             proc.StartInfo.FileName = @"res\hax\hax.exe";
             proc.StartInfo.Arguments = cParams;
             proc.StartInfo.RedirectStandardInput = true;
@@ -118,21 +119,7 @@ namespace TexHax
 
             // string[] test = new string[1000];
             StreamWriter mySW = proc.StandardInput;
-
-            /* int i = 0;
-            while (!proc.StandardOutput.EndOfStream)
-            {
-                Console.WriteLine(proc.StandardOutput.ReadLine());
-                test[i] = proc.StandardOutput.ReadLine();
-                i++;
-            } */
-            // https://stackoverflow.com/questions/4291912/process-start-how-to-get-the-output
-
-            //foreach (string tessts in test)
-            //{
-            //    Console.WriteLine(tessts);
-            //}
-
+            
             proc.WaitForExit();
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -145,6 +132,48 @@ namespace TexHax
             // Thread.Sleep(250);
 
             Console.ForegroundColor = ConsoleColor.Green;
+        }
+
+        void ImportAll()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+
+            string procParams = @"bfres\" + target + ".bfres";
+
+            Process proc = new Process();
+            proc.StartInfo.FileName = @"res\hax\hax.exe";
+            proc.StartInfo.Arguments = procParams;
+            proc.StartInfo.RedirectStandardInput = true;
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.RedirectStandardOutput = true; // exe output to my program todo
+            proc.Start();
+
+            string[] output = proc.StandardOutput.ReadToEnd().Split('\n');
+
+            /**
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                Console.WriteLine(proc.StandardOutput.ReadLine());
+                list.Add(proc.StandardOutput.ReadLine());
+            } */
+            // https://stackoverflow.com/questions/4291912/process-start-how-to-get-the-output
+
+            proc.WaitForExit();
+
+            int i = 0;
+            List<string> texturePosition = new List<string>();
+            List<string> textureName = new List<string>();
+
+            Regex isNumber = new Regex(@"^\d+");
+            foreach (string line in output)
+            {
+                if (isNumber.IsMatch(line))
+                {
+                    i++;
+                }
+            }
+
+            Console.WriteLine("Found " + i + " texture positions");
         }
 
         private string GetPath()
