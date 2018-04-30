@@ -184,15 +184,17 @@ namespace TexHax
 
             string[] ddsFiles = Directory.GetFiles(@"Converted\dds\" + target + @"\", "*.dds");
 
-            foreach (string item in ddsFiles)
+            for (i = 0; i < ddsFiles.Length; i++)
             {
-                Console.WriteLine(item);
+                // string filename = ddsFiles...
 
-                /* cParams = @"Converted\dds\" + target + @"\" + item + ".dds" +
-                        @" bfres\" + target + ".bfres " +
-                        minMip + " " +
-                        texPos + " " +
-                        wait; */
+                Console.WriteLine(ddsFiles[1]);
+
+                cParams = ddsFiles[1] + @" bfres\" + target + ".bfres 0 " +
+                        texturePositions[texturePositions.IndexOf(filename)] + " " +
+                        wait;
+
+                // 
             }
         }
 
