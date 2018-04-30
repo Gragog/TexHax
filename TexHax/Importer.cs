@@ -136,8 +136,12 @@ namespace TexHax
 
         void ImportAll()
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Getting texture positions...\n");
 
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            
             string procParams = @"bfres\" + target + ".bfres";
 
             Process proc = new Process();
@@ -176,7 +180,20 @@ namespace TexHax
                 }
             }
 
-            Console.WriteLine("Found " + i + " texture positions");
+            Console.WriteLine("Found " + i + " texture positions\n\nGetting .dds files...");
+
+            string[] ddsFiles = Directory.GetFiles(@"Converted\dds\" + target + @"\", "*.dds");
+
+            foreach (string item in ddsFiles)
+            {
+                Console.WriteLine(item);
+
+                /* cParams = @"Converted\dds\" + target + @"\" + item + ".dds" +
+                        @" bfres\" + target + ".bfres " +
+                        minMip + " " +
+                        texPos + " " +
+                        wait; */
+            }
         }
 
         private string GetPath()
