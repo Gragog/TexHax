@@ -69,7 +69,7 @@ namespace TexHax
 
             Console.ForegroundColor = ConsoleColor.Green;
 
-            switch (input.ToLower())
+            switch (input)
             {
                 case "1":
                     Decoder decoder = new Decoder();

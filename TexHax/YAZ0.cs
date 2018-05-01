@@ -119,9 +119,11 @@ namespace Compressor
             byte[] realresult = new byte[dstoffs];
             Array.Copy(result, realresult, dstoffs);
 
+            DrawProgress(1, 1L);
+
             Console.ForegroundColor = ConsoleColor.Yellow;
             sw.Stop();
-            Console.WriteLine("\n\nCompressed in " + sw.Elapsed.Minutes + ":" + sw.Elapsed.Seconds + "." + sw.Elapsed.Milliseconds + " seconds");
+            Console.WriteLine("\n\nCompressed in " + sw.Elapsed.Minutes + ":" + sw.Elapsed.Seconds + "." + sw.Elapsed.Milliseconds + " minutes");
             Console.WriteLine("File is " + TexHax.Helper.NumberToFilesize(realresult.Length, 2) + " big\n");
 
             return realresult;
@@ -161,15 +163,14 @@ namespace Compressor
         {
             long percentage = (100 * offset / length);
 
-            string toWrite = percentage <= 9.5f ? "0" + percentage.ToString() : percentage.ToString();
+            string toWrite = percentage < 10 ? "0" + percentage.ToString() : percentage.ToString();
 
             Console.Write("\rProgress: " + toWrite + "% {");
             Console.ForegroundColor = ConsoleColor.Green;
 
             for (int i = 0; i < 100; i++)
             {
-                Console.Write(i < percentage ? "=" : " ");
-                if (i == percentage) Console.Write(">");
+                Console.Write(i <= percentage ? (i == percentage ? "=>" : "=") : " ");
             }
 
             Console.ForegroundColor = ConsoleColor.Yellow;

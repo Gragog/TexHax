@@ -38,8 +38,6 @@ namespace TexHax
                 "======================================================================"
                 );
 
-            Sleep(500);
-
             RunProgram();
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -49,7 +47,6 @@ namespace TexHax
                 "======================================================================"
                 );
 
-            Sleep(250);
             Console.ForegroundColor = ConsoleColor.Yellow;
 
             Console.WriteLine("\n" + @"Renaming 'Extracted\" + bfresFile + @".bfres\'" + " to " + @"Extracted\" + bfresFile + @"\");
@@ -73,7 +70,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine().ToLower();
+                input = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;

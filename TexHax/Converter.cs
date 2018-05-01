@@ -44,7 +44,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine().ToLower();
+                input = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -79,8 +79,6 @@ namespace TexHax
             else CleanUp();
 
             ReCreateFolders();
-
-            Sleep(1500);
         }
 
         private void CleanUp()
@@ -137,8 +135,6 @@ namespace TexHax
                 "======================================================================"
                 );
 
-            // Sleep(500);
-
             Console.ForegroundColor = ConsoleColor.Cyan;
             ConvertToLossy();
             ConvertToLosslessPrepare();
@@ -150,8 +146,6 @@ namespace TexHax
                 "======================================================================\n" +
                 "======================================================================\n"
                 );
-
-            Sleep(250);
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(@"Deleting 'Converted\dds_prepare'");

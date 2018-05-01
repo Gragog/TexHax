@@ -16,7 +16,7 @@ namespace TexHax
         string ddsFile = "";
         string minMip = "";
         string texPos = "";
-         int wait = Settings.import_waitForSec;
+        int wait = Settings.import_waitForSec;
         string cParams = ""; // ddsWithExtenison + @" bfres\" + target + ".bfres " + Convert.ToInt32(minMipInt) + " " + Convert.ToInt32(texPosInt);
 
         public void Import()
@@ -129,8 +129,6 @@ namespace TexHax
                 "======================================================================\n"
                 );
 
-            // Thread.Sleep(250);
-
             Console.ForegroundColor = ConsoleColor.Green;
         }
 
@@ -138,10 +136,11 @@ namespace TexHax
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Getting texture positions...\n");
+            Console.Write("Getting texture positions...");
 
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             string procParams = @"bfres\" + target + ".bfres";
 
             Process proc = new Process();
@@ -154,13 +153,16 @@ namespace TexHax
 
             string[] output = proc.StandardOutput.ReadToEnd().Split('\n');
 
-            /**
-            while (!proc.StandardOutput.EndOfStream)
-            {
-                Console.WriteLine(proc.StandardOutput.ReadLine());
-                list.Add(proc.StandardOutput.ReadLine());
-            } */
-            // https://stackoverflow.com/questions/4291912/process-start-how-to-get-the-output
+            #region alt input
+            /*
+            * while (!proc.StandardOutput.EndOfStream)
+            * {
+            *     Console.WriteLine(proc.StandardOutput.ReadLine());
+            *     list.Add(proc.StandardOutput.ReadLine());
+            * }
+            * // https://stackoverflow.com/questions/4291912/process-start-how-to-get-the-output
+            */
+            #endregion
 
             proc.WaitForExit();
 
@@ -175,37 +177,100 @@ namespace TexHax
                 {
                     i++;
                     int whitespaceIndex = line.IndexOf(' ');
-                    textureNames.Add(line.Substring(whitespaceIndex + 1));
+                    textureNames.Add(line.Substring(whitespaceIndex + 1).TrimEnd('\r').ToLower());
                     texturePositions.Add(line.Substring(0, whitespaceIndex));
                 }
             }
 
-            Console.WriteLine("Found " + i + " texture positions\n\nGetting .dds files...");
+            Console.Write("\rFound " + i + " texture positions      \nGetting .dds files...");
 
-            string[] ddsFiles = Directory.GetFiles(@"Converted\dds\" + target + @"\", "*.dds");
+            string[] ddsFilesWithPath = Directory.GetFiles(@"Converted\dds\" + target + @"\", "*.dds");
+            string[] ddsFiles = new string[ddsFilesWithPath.Length];
+            Console.Write("\rFound " + ddsFilesWithPath.Length + " .dds file" + (ddsFilesWithPath.Length == 1 ? "" : "s") + "            \nFinding matches...");
 
-            for (i = 0; i < ddsFiles.Length; i++)
+            // save file names without path to array
+            for (int j = 0; j < ddsFilesWithPath.Length; j++)
             {
-                // string filename = ddsFiles...
+                string newFileName = ddsFilesWithPath[j].Replace(".dds", "");
 
-                Console.WriteLine(ddsFiles[1]);
+                if (newFileName.Contains(@"\"))
+                {
+                    newFileName = newFileName.Substring(newFileName.LastIndexOf(@"\") + 1);
+                }
+                // Console.WriteLine(newFileName);
 
-                cParams = ddsFiles[1] + @" bfres\" + target + ".bfres 0 " +
-                        texturePositions[texturePositions.IndexOf(filename)] + " " +
-                        wait;
-
-                // 
+                ddsFiles[j] = newFileName;
             }
+
+            List<string> allParams = new List<string>();
+            for (i = 0; i < texturePositions.Count; i++)
+            {
+                int pos = Array.IndexOf(ddsFiles, textureNames[i]);
+
+                if (pos != -1)
+                {
+                    string fileName = ddsFilesWithPath[pos];
+
+                    // Console.WriteLine(fileName);
+
+                    allParams.Add(fileName + @" bfres\" + target + ".bfres 0 " +
+                            texturePositions[i] + " " +
+                            wait);
+                }
+            }
+
+            Console.Write("\rFound " + allParams.Count + " match" + (allParams.Count == 1 ? "" : "es") + "         \nStart importing "
+                + (allParams.Count == 1 ? "it" : "them") + "...\n\n");
+
+            int k = 0;
+            foreach (string currentParam in allParams)
+            {
+                DrawProgress(++k, allParams.Count, currentParam);
+
+                proc.StartInfo.Arguments = currentParam;
+                proc.StartInfo.RedirectStandardInput = true;
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.RedirectStandardOutput = true; // exe output to my program todo
+                proc.Start();
+                proc.WaitForExit();
+            }
+
+            sw.Stop();
+            Console.WriteLine("\n\nImported in " + sw.Elapsed.Minutes + ":" + sw.Elapsed.Seconds + "." + sw.Elapsed.Milliseconds + " minutes\n");
         }
 
-        private string GetPath()
+        void DrawProgress(int current, int total, string param)
+        {
+            int percentage = (100 * current / total);
+
+            string toWrite = percentage < 10 ? "0" + percentage.ToString() : percentage.ToString();
+            string anotherToWrite = current < 10 ? "0" + current.ToString() : current.ToString();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("\r" + anotherToWrite + "/" + total + " " + toWrite + "% {");
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            int progressBarWidth = Console.WindowWidth - 20;
+            for (int i = 0; i < progressBarWidth; i++)
+            {
+                int myPercentage = (percentage * progressBarWidth) / 100;
+
+                Console.Write(i <= myPercentage ? (i == myPercentage ? "=>" : "=") : " ");
+            }
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.Write("}");
+        }
+
+        string GetPath()
         {
             string path = System.Reflection.Assembly.GetEntryAssembly().Location;
             string fileName = Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().Location);
             return path.Replace(@"\" + fileName, "");
         }
 
-        private void SetTarget()
+        void SetTarget()
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
@@ -221,7 +286,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine().ToLower();
+                input = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -240,7 +305,7 @@ namespace TexHax
             }
         }
 
-        private void AskForDDS()
+        void AskForDDS()
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
@@ -256,7 +321,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine().ToLower();
+                input = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -276,7 +341,7 @@ namespace TexHax
             ddsFile = input;
         }
 
-        private void AskForMinMip()
+        void AskForMinMip()
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
@@ -291,7 +356,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine().ToLower();
+                input = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -306,7 +371,7 @@ namespace TexHax
             else minMip = input;
         }
 
-        private void AskForTexPos()
+        void AskForTexPos()
         {
             Console.ForegroundColor = ConsoleColor.Green;
 
@@ -321,7 +386,7 @@ namespace TexHax
                 isRegexValid = false;
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                input = Console.ReadLine().ToLower();
+                input = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Red;
 
                 if (regexItem.IsMatch(input)) isRegexValid = true;
@@ -335,21 +400,21 @@ namespace TexHax
             texPos = input;
         }
 
-        private void CleanUp()
+        void CleanUp()
         {
             string[] gtxFiles = Directory.GetFiles(@"Converted\dds\" + target + "\\", "*.gtx");
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Cleaninig up:\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("  deleting " + gtxFiles.Length + " file" + (gtxFiles.Length == 1 ? "" : "s") + "...");
 
             foreach (string gtxFile in gtxFiles)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-
-                Console.WriteLine("  deleting '" + gtxFile + "'...");
                 File.Delete(gtxFile);
-                Console.WriteLine("   done\n");
             }
+
+            Console.WriteLine("   done\n");
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Cleaned up\n");
