@@ -61,7 +61,7 @@ namespace TexHax
                     return;
                 }
 
-                Console.WriteLine("\nEncoding 'Finished\\" + bfresFile + @".bfres' to 'Finished\szs\" + szsTarget + ".szs'. This will take a while\n");
+                Console.WriteLine("\nEncoding 'bfres\\" + bfresFile + @".bfres' to 'Finished\szs\" + szsTarget + ".szs'. This will take a while\n");
 
                 RunInCodeEncoder();
             }
